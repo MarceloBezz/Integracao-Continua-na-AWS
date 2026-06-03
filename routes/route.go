@@ -19,5 +19,5 @@ func HandleRequest() {
 	r.GET("/alunos/", controllers.BuscaAlunoPorCPF)
 	r.GET("/index", controllers.ExibePaginaIndex)
 	r.NoRoute(controllers.RotaNaoEncontrada)
-	r.Run()
+	r.Run(":8080")
 }

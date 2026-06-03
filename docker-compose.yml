@@ -1,23 +1,44 @@
-version: '3'
+version: '3.8'
+
 services:
   postgres:
-    image: "postgres"
+    image: postgres:14
     environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=root      
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: root
     ports:
       - "5432:5432"
     volumes:
-      - /postgres-data:/var/lib/postgresql/data  
+      - /postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d root"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   pgadmin-compose:
     image: dpage/pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: "gui@alura.com"
+      PGADMIN_DEFAULT_EMAIL: gui@alura.com
       PGADMIN_DEFAULT_PASSWORD: "123456"
     ports:
       - "54321:80"
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
 
+  # app:
+  #   image: marcelobezz07/api-go-dev:latest
+  #   environment:
+  #     HOST: postgres
+  #     PORT: "5432"
+  #     USER: root
+  #     PASSWORD: root
+  #     DBNAME: root
+  #   ports:
+  #     - "8080:8080"
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
