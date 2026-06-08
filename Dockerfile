@@ -15,13 +15,13 @@ EXPOSE 8000
 
 WORKDIR /app
 
-ENV HOST=host.docker.internal
-ENV DBPORT=5432
+ENV DB_HOST=host.docker.internal
+ENV DB_PORT=5432
 ENV PORT=8000
 
-ENV USER=root
-ENV PASSWORD=root
-ENV DBNAME=root
+ENV DB_USER=root
+ENV DB_PASSWORD=root
+ENV DB_NAME=root
 
 COPY --from=builder /app/main .
 COPY --from=builder /app/templates ./templates
