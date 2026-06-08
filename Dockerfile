@@ -17,6 +17,7 @@ WORKDIR /app
 
 ENV HOST=host.docker.internal
 ENV DBPORT=5432
+ENV PORT=8000
 
 ENV USER=root
 ENV PASSWORD=root
