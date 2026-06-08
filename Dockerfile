@@ -16,7 +16,7 @@ EXPOSE 8000
 WORKDIR /app
 
 ENV HOST=host.docker.internal
-ENV PORT=5432
+ENV DBPORT=5432
 
 ENV USER=root
 ENV PASSWORD=root
