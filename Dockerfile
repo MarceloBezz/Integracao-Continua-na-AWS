@@ -26,4 +26,6 @@ ENV DB_NAME=root
 COPY --from=builder /app/main .
 COPY --from=builder /app/templates ./templates
 
+RUN chmod +x main
+
 CMD ["./main"]
