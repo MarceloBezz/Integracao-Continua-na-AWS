@@ -16,7 +16,7 @@ jobs:
         aws-region: us-west-2
 
     - name: Obtendo arquivo da tarefa
-      run: aws ecs describe-task-definition --task-definition my-task-definition-family --query taskDefinition > task-definition.json
+      run: aws ecs describe-task-definition --task-definition Tarefa_API-Go --query taskDefinition > task-definition.json
 
     - name: Colocar um novo ID de imagem no task definition
       id: task-def
@@ -25,3 +25,10 @@ jobs:
         task-definition: task-definition.json
         container-name: Go
         image: marcelobezz07/api-go-dev:${{github.ref_name}}
+        environment-variables: |
+          DB_HOST=${{ secrets.DBHOST }}
+          DB_USER=${{ secrets.DBUSER }}
+          DB_PASSWORD=${{ secrets.DBPASSWORD }}
+          DB_NAME=${{ secrets.DBNAME }}
+          DB_PORT=${{ secrets.DBPORT }}
+          PORT=8000
