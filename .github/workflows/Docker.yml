@@ -42,4 +42,4 @@ jobs:
     # Push is a shorthand for --output=type=registry
         push: true
     # List of tags
-        tags: marcelobezz07/api-go-dev:${{github.ref_name}}
+        tags: marcelobezz07/api-go-dev:${{ github.run_number }}
