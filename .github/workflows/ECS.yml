@@ -1,0 +1,27 @@
+name: Entrega Contínua ECS
+
+on:
+  workflow_call:
+
+jobs:
+  
+  ECS:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Configurando credenciais da AWS
+      uses: aws-actions/configure-aws-credentials@v6.2.0
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-west-2
+
+    - name: Obtendo arquivo da tarefa
+      run: aws ecs describe-task-definition --task-definition my-task-definition-family --query taskDefinition > task-definition.json
+
+    - name: Colocar um novo ID de imagem no task definition
+      id: task-def
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: task-definition.json
+        container-name: Go
+        image: marcelobezz07/api-go-dev:${{github.ref_name}}
